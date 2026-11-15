@@ -62,11 +62,10 @@ export default function PrayerTimeline({
   return (
     <div className="space-y-4">
       {/* Hero Countdown & Next Prayer Card */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-900/90 via-slate-900/95 to-slate-950 border border-emerald-500/30 p-5 sm:p-7 shadow-2xl shadow-emerald-950/40">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 border border-emerald-500/25 p-5 sm:p-7 shadow-xl shadow-black/20">
         
         {/* Decorative background glow */}
-        <div className="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-28 -right-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-emerald-800/30 pb-5">
@@ -117,7 +116,7 @@ export default function PrayerTimeline({
               <div className="flex items-center gap-1.5 sm:gap-2">
                 {/* Hours */}
                 <div className="flex flex-col items-center">
-                  <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-2xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-center text-xl sm:text-2xl font-black text-white shadow-inner font-mono">
+                  <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-xl bg-slate-950/80 border border-slate-700/80 flex items-center justify-center text-xl sm:text-2xl font-black text-white shadow-inner font-mono">
                     {hoursFormatted}
                   </div>
                   <span className="text-[10px] text-slate-400 mt-1">{isBn ? 'ঘণ্টা' : 'Hours'}</span>
@@ -127,7 +126,7 @@ export default function PrayerTimeline({
 
                 {/* Minutes */}
                 <div className="flex flex-col items-center">
-                  <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-2xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-center text-xl sm:text-2xl font-black text-emerald-300 shadow-inner font-mono">
+                  <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-xl bg-slate-950/80 border border-slate-700/80 flex items-center justify-center text-xl sm:text-2xl font-black text-emerald-300 shadow-inner font-mono">
                     {minutesFormatted}
                   </div>
                   <span className="text-[10px] text-slate-400 mt-1">{isBn ? 'মিনিট' : 'Mins'}</span>
@@ -137,7 +136,7 @@ export default function PrayerTimeline({
 
                 {/* Seconds */}
                 <div className="flex flex-col items-center">
-                  <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-2xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-center text-xl sm:text-2xl font-black text-teal-300 shadow-inner font-mono">
+                  <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-xl bg-slate-950/80 border border-slate-700/80 flex items-center justify-center text-xl sm:text-2xl font-black text-teal-300 shadow-inner font-mono">
                     {secondsFormatted}
                   </div>
                   <span className="text-[10px] text-slate-400 mt-1">{isBn ? 'সেকেন্ড' : 'Secs'}</span>

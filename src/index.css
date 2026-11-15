@@ -1,14 +1,52 @@
 @import "tailwindcss";
 
+@theme {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #111b2d;
+  --color-slate-950: #080f1c;
+
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+  --color-teal-950: #042f2e;
+}
+
 @layer base {
   :root {
     --font-sans: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
     --font-arabic: 'Amiri', serif;
     --font-bengali: 'Hind Siliguri', sans-serif;
+    color-scheme: dark;
   }
 
   body {
     font-family: var(--font-sans);
+    background-color: #080f1c;
+    color: #f1f5f9;
   }
 }
 
@@ -22,14 +60,14 @@
 
 /* Custom Islamic pattern background */
 .bg-islamic-pattern {
-  background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px), radial-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(52, 211, 153, 0.055) 1px, transparent 1px);
   background-size: 32px 32px;
-  background-position: 0 0, 16px 16px;
+  background-position: 0 0;
 }
 
 /* Glassmorphism helpers */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(17, 27, 45, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -43,8 +81,8 @@
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.78) 0%, rgba(17, 27, 45, 0.65) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.12);
   backdrop-filter: blur(12px);
 }
 
@@ -67,9 +105,9 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.3);
+  background: rgba(52, 211, 153, 0.35);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.6);
+  background: rgba(52, 211, 153, 0.65);
 }

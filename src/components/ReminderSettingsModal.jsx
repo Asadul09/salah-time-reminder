@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   X, Bell, BellRing, Volume2, ShieldCheck, 
-  RotateCcw, Sparkles, Check, AlertTriangle 
+  RotateCcw, Sparkles, Check, AlertTriangle, Download, Smartphone 
 } from 'lucide-react';
 import { soundPlayer } from '../utils/audioAlert';
 
@@ -13,7 +13,9 @@ export default function ReminderSettingsModal({
   notificationPermission,
   onRequestPermission,
   onTestNotification,
-  lang
+  lang,
+  onOpenInstallModal,
+  isInstalled
 }) {
   if (!isOpen) return null;
   const isBn = lang === 'bn';
@@ -79,61 +81,88 @@ export default function ReminderSettingsModal({
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>{isBn ? 'রিমাইন্ডার নীতি ও সময়সূচি:' : 'Reminder Policy & Timing:'}</span>
           </div>
-          <p className="text-slate-300 leading-relaxed">
+          <p className="text-slate-400 leading-relaxed">
             {isBn 
-              ? 'প্রতিটি সক্রিয় নামাজের জন্য নির্ধারিত দুটি নোটিফিকেশন দেয়া হয়: ১ম রিমাইন্ডার ওয়াক্তের ঠিক ৩০ মিনিট আগে এবং ২য় রিমাইন্ডার ওয়াক্তের ঠিক ১০ মিনিট আগে। এর অতিরিক্ত কোনো অনাকাঙ্ক্ষিত রিমাইন্ডার দেওয়া হয় না।'
-              : 'Each enabled Salah triggers strictly 2 notifications: 1st reminder at 30 minutes before, and 2nd reminder at 10 minutes before. No excess spam alerts.'}
+              ? 'প্রতিটি সক্রিয় ওয়াক্তের জন্য ওয়াক্ত শুরুর ঠিক ৩০ মিনিট পূর্বে প্রথম ও ১০ মিনিট পূর্বে চূড়ান্ত সতর্কবার্তা প্রদর্শিত হবে।'
+              : 'For every active prayer, you will receive alerts at exactly 30 minutes and 10 minutes prior.'}
           </p>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-5 overflow-y-auto space-y-5 flex-1">
+        {/* Scrollable Body */}
+        <div className="p-5 overflow-y-auto space-y-5">
           
-          {/* Permission warning banner if not granted */}
-          {notificationPermission !== 'granted' && (
-            <div className="p-3.5 rounded-2xl bg-amber-950/40 border border-amber-600/30 flex items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2.5 text-amber-200">
-                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>{isBn ? 'ব্রাউজার নোটিফিকেশন অনুমতি প্রয়োজন' : 'Browser notification permission needed'}</span>
+          {/* Permission Status */}
+          <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className={`p-2 rounded-xl ${
+                notificationPermission === 'granted'
+                  ? 'bg-emerald-500/10 text-emerald-400'
+                  : 'bg-amber-500/10 text-amber-400'
+              }`}>
+                <Bell className="w-4 h-4" />
               </div>
+              <div>
+                <h4 className="text-xs font-bold text-white">
+                  {isBn ? 'ব্রাউজার নোটিফিকেশন স্ট্যাটাস' : 'Browser Notification Status'}
+                </h4>
+                <p className="text-[11px] text-slate-400">
+                  {notificationPermission === 'granted'
+                    ? (isBn ? 'সক্রিয় আছে (অনুমোদিত)' : 'Enabled & Active')
+                    : notificationPermission === 'denied'
+                      ? (isBn ? 'ব্রাউজারে ব্লক করা রয়েছে' : 'Permission Blocked')
+                      : (isBn ? 'অনুমতি প্রয়োজন' : 'Permission Required')}
+                </p>
+              </div>
+            </div>
+
+            {notificationPermission !== 'granted' && (
               <button
                 onClick={onRequestPermission}
-                className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 transition"
+                className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition"
               >
                 {isBn ? 'অনুমতি দিন' : 'Allow'}
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
-          {/* Individual Salah Switches */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-bold text-slate-200">
-                {isBn ? 'ওয়াক্ত ভিত্তিক রিমাইন্ডার নির্বাচন' : 'Per-Salah Notification Toggle'}
+          {/* Individual Prayer Toggles */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                {isBn ? '৫ ওয়াক্তের রিমাইন্ডার চালু/বন্ধ' : '5 Daily Prayer Reminders'}
               </h4>
               <button
                 onClick={handleResetDefaults}
                 className="text-xs text-emerald-400 hover:underline flex items-center gap-1"
               >
                 <RotateCcw className="w-3 h-3" />
-                <span>{isBn ? 'সবগুলো চালু করুন (ডিফল্ট)' : 'Enable All (Default)'}</span>
+                <span>{isBn ? 'সব চালু করুন' : 'Reset All'}</span>
               </button>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {prayers.map((p) => {
                 const isEnabled = !!reminderPrefs[p.id];
                 return (
                   <div
                     key={p.id}
                     onClick={() => handleTogglePrayer(p.id)}
-                    className="cursor-pointer p-3.5 rounded-2xl bg-slate-800/50 hover:bg-slate-800 border border-slate-700 flex items-center justify-between transition"
+                    className={`flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition ${
+                      isEnabled
+                        ? 'bg-emerald-950/20 border-emerald-500/40 text-white'
+                        : 'bg-slate-950/40 border-slate-800 text-slate-400'
+                    }`}
                   >
                     <div>
-                      <div className="font-bold text-white text-sm">
-                        {isBn ? p.bn : p.en}
+                      <div className="font-semibold text-sm flex items-center gap-2">
+                        <span>{isBn ? p.bn : p.en}</span>
+                        {isEnabled && (
+                          <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-medium">
+                            {isBn ? '৩০ ও ১০ মি. সক্রিয়' : '30m & 10m active'}
+                          </span>
+                        )}
                       </div>
-                      <div className="text-xs text-slate-400">
+                      <div className="text-[11px] text-slate-400">
                         {p.desc}
                       </div>
                     </div>
@@ -183,6 +212,22 @@ export default function ReminderSettingsModal({
               <span>{isBn ? 'টেস্ট নোটিফিকেশন পাঠান (Test Notification)' : 'Send Sample Test Notification'}</span>
             </button>
           </div>
+
+          {/* Install App Button if not installed */}
+          {!isInstalled && onOpenInstallModal && (
+            <div className="pt-3 border-t border-slate-800">
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenInstallModal();
+                }}
+                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-950 transition"
+              >
+                <Download className="w-4 h-4 animate-bounce" />
+                <span>{isBn ? 'ফোনে সরাসরি অ্যাপ হিসেবে ইনস্টল করুন' : 'Install App to Phone'}</span>
+              </button>
+            </div>
+          )}
 
         </div>
 

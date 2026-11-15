@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Bell, BellOff, Volume2, VolumeX, Moon, Sun, 
-  MapPin, Clock, Calendar, Compass, ShieldCheck 
+  MapPin, Clock, Calendar, Compass, ShieldCheck, Download, Smartphone 
 } from 'lucide-react';
 import { toBengaliDigits } from '../utils/prayerCalc';
 
@@ -20,7 +20,9 @@ export default function Header({
   onToggle24Hour,
   lang,
   onToggleLang,
-  onOpenSettingsModal
+  onOpenSettingsModal,
+  onOpenInstallModal,
+  isInstalled
 }) {
   const isBn = lang === 'bn';
 
@@ -45,7 +47,7 @@ export default function Header({
   const gregorianStr = currentTime.toLocaleDateString(isBn ? 'bn-BD' : 'en-US', dateOptions);
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-xl bg-slate-900/85 border-b border-emerald-900/30 shadow-lg">
+    <header className="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/90 border-b border-slate-800/80 shadow-lg shadow-black/10">
       <div className="max-w-6xl mx-auto px-4 py-3 sm:py-4">
         {/* Top bar with Branding, Division, & Global Controls */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -71,28 +73,55 @@ export default function Header({
               </div>
             </div>
 
-            {/* Division Switcher Button (Mobile view button) */}
-            <button
-              onClick={onOpenDivisionModal}
-              className="sm:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/70 border border-emerald-600/30 hover:border-emerald-500 text-emerald-300 text-xs font-medium transition active:scale-95"
-            >
-              <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{isBn ? selectedDivision.nameBn : selectedDivision.name}</span>
-              {selectedDivision.id === 'dhaka' && (
-                <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-1 rounded">ডিফল্ট</span>
+            {/* Mobile Actions: Install App Button & Division Switcher */}
+            <div className="flex items-center gap-1.5 sm:hidden">
+              {!isInstalled && (
+                <button
+                  onClick={onOpenInstallModal}
+                  className="relative flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600/30 to-teal-600/30 hover:from-emerald-600/50 hover:to-teal-600/50 border border-emerald-500/50 text-emerald-300 text-xs font-semibold active:scale-95 transition shadow-sm"
+                  title={isBn ? 'ফোনে অ্যাপ ইনস্টল করুন' : 'Install App'}
+                  aria-label={isBn ? 'অ্যাপ ডাউনলোড করুন' : 'Install App'}
+                >
+                  <Download className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
+                  <span className="text-[11px]">{isBn ? 'ইনস্টল' : 'App'}</span>
+                </button>
               )}
-            </button>
+
+              {/* Division Switcher Button (Mobile view button) */}
+              <button
+                onClick={onOpenDivisionModal}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/70 border border-emerald-600/30 hover:border-emerald-500 text-emerald-300 text-xs font-medium transition active:scale-95"
+              >
+                <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+                <span>{isBn ? selectedDivision.nameBn : selectedDivision.name}</span>
+                {selectedDivision.id === 'dhaka' && (
+                  <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-1 rounded">ডিফল্ট</span>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Division Selector & Global Controls for Desktop */}
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-end w-full sm:w-auto">
+            {/* Install / Download App Button (Desktop) */}
+            {!isInstalled && (
+              <button
+                onClick={onOpenInstallModal}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-950/90 to-teal-950/90 hover:from-emerald-900/90 hover:to-teal-900/90 border border-emerald-500/40 text-emerald-300 text-xs font-semibold transition duration-200 shadow-sm group active:scale-95"
+                title={isBn ? 'ফোনে বা কম্পিউটারে অ্যাপ ইনস্টল করুন' : 'Install app on phone/PC'}
+              >
+                <Download className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition animate-pulse" />
+                <span>{isBn ? 'অ্যাপ ইনস্টল' : 'Install App'}</span>
+              </button>
+            )}
+
             {/* Division Switcher Desktop */}
             <button
               onClick={onOpenDivisionModal}
-              className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/50 border border-emerald-600/30 hover:border-emerald-500 text-emerald-300 text-xs font-medium transition duration-200 shadow-sm"
+              className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-500/50 text-emerald-200 text-xs font-medium transition duration-200 shadow-sm"
               title="বিভাগ পরিবর্তন করুন / Change Division"
             >
-              <MapPin className="w-4 h-4 text-emerald-400 animate-bounce" />
+              <MapPin className="w-4 h-4 text-emerald-400" />
               <div className="text-left">
                 <div className="flex items-center gap-1.5">
                   <span className="font-semibold text-slate-100">
@@ -110,23 +139,37 @@ export default function Header({
 
             {/* Notification Permission Indicator / Button */}
             <button
-              onClick={notificationPermission !== 'granted' ? onRequestNotification : onOpenSettingsModal}
+              onClick={notificationPermission === 'default' ? onRequestNotification : onOpenSettingsModal}
               className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium transition border ${
                 notificationPermission === 'granted'
-                  ? 'bg-emerald-950/40 text-emerald-300 border-emerald-600/30 hover:bg-emerald-900/40'
-                  : 'bg-amber-950/50 text-amber-300 border-amber-600/40 animate-pulse hover:bg-amber-900/50'
+                  ? 'bg-emerald-950/60 text-emerald-200 border-emerald-700/60 hover:bg-emerald-900/70'
+                  : 'bg-amber-950/50 text-amber-200 border-amber-700/60 hover:bg-amber-900/60'
               }`}
-              title={
+              aria-label={
                 notificationPermission === 'granted'
-                  ? 'নোটিফিকেশন সক্রিয় (৩০ ও ১০ মিনিট আগে)'
-                  : 'নোটিফিকেশন অনুমতি দিন'
+                  ? (isBn ? 'রিমাইন্ডার সেটিংস খুলুন' : 'Open reminder settings')
+                  : (isBn ? 'নোটিফিকেশন চালু করুন' : 'Enable alerts')
+              }
+              title={notificationPermission === 'denied'
+                ? (isBn ? 'ব্রাউজার সেটিংস থেকে নোটিফিকেশন অনুমতি দিন' : 'Allow notifications in browser settings')
+                : notificationPermission === 'unsupported'
+                  ? (isBn ? 'এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়' : 'Notifications are not supported in this browser')
+                  : notificationPermission === 'granted'
+                    ? (isBn ? 'নোটিফিকেশন সক্রিয় (৩০ ও ১০ মিনিট আগে)' : 'Notifications enabled (30m and 10m before)')
+                    : (isBn ? 'নোটিফিকেশন অনুমতি দিন' : 'Allow browser notifications')
               }
             >
-              <Bell className="w-3.5 h-3.5" />
+              {notificationPermission === 'granted'
+                ? <Bell className="w-3.5 h-3.5" />
+                : <BellOff className="w-3.5 h-3.5" />}
               <span className="hidden sm:inline">
                 {notificationPermission === 'granted'
                   ? (isBn ? 'রিমাইন্ডার অন' : 'Reminder ON')
-                  : (isBn ? 'নোটিফিকেশন চালু করুন' : 'Enable Alerts')}
+                  : notificationPermission === 'denied'
+                    ? (isBn ? 'অনুমতি বন্ধ' : 'Alerts blocked')
+                    : notificationPermission === 'unsupported'
+                      ? (isBn ? 'সমর্থিত নয়' : 'Unavailable')
+                      : (isBn ? 'নোটিফিকেশন চালু করুন' : 'Enable Alerts')}
               </span>
             </button>
 

@@ -11,6 +11,9 @@ import DuasSection from './components/DuasSection';
 import InAppToast from './components/InAppToast';
 import BottomNav from './components/BottomNav';
 import Footer from './components/Footer';
+import InstallModal from './components/InstallModal';
+import InstallBanner from './components/InstallBanner';
+import confetti from 'canvas-confetti';
 
 import { BANGLADESH_DIVISIONS, DEFAULT_DIVISION } from './data/divisions';
 import { 
@@ -65,6 +68,16 @@ export default function App() {
     return 'unsupported';
   });
 
+  // PWA Install Prompt State
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+    return false;
+  });
+  const [isInstallModalOpen, setIsInstallModalOpen] = useState(false);
+
   // UI States
   const [inAppAlert, setInAppAlert] = useState(null);
   const [isDivisionModalOpen, setIsDivisionModalOpen] = useState(false);
@@ -81,6 +94,42 @@ export default function App() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Capture beforeinstallprompt for PWA installation on mobile/desktop
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    const handleAppInstalled = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+      try {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      } catch {}
+      setInAppAlert({
+        id: Date.now(),
+        type: 'success',
+        prayerNameBn: 'সালাহ রিমাইন্ডার অ্যাপ',
+        prayerNameEn: 'Salah Reminder App',
+        messageBn: 'অভিনন্দন! অ্যাপটি আপনার ফোনে সফলভাবে ইনস্টল হয়েছে। এখন থেকে সরাসরি হোম স্ক্রিন থেকেই ব্যবহার করতে পারবেন।',
+        messageEn: 'Congratulations! Salah Reminder has been installed on your device.'
+      });
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, [lang]);
 
   // Save selected division
   const handleSelectDivision = useCallback((division) => {
@@ -135,6 +184,7 @@ export default function App() {
   const handleRequestNotification = async () => {
     const result = await requestNotificationPermission();
     setNotificationPermission(result);
+    setIsSettingsModalOpen(true);
   };
 
   // Test Notification handler
@@ -154,6 +204,23 @@ export default function App() {
     fireNotification(sample, reminderPrefs);
     setInAppAlert(sample);
   };
+
+  // Open install modal or prompt
+  const handleOpenInstallModal = useCallback(() => {
+    setIsInstallModalOpen(true);
+  }, []);
+
+  const handleInstalledSuccess = useCallback(() => {
+    setIsInstalled(true);
+    setInAppAlert({
+      id: Date.now(),
+      type: 'success',
+      prayerNameBn: 'সালাহ রিমাইন্ডার অ্যাপ',
+      prayerNameEn: 'Salah Reminder App',
+      messageBn: 'অভিনন্দন! অ্যাপটি আপনার ফোনে সফলভাবে ইনস্টল করা হয়েছে।',
+      messageEn: 'Congratulations! The app has been installed on your device.'
+    });
+  }, []);
 
   // Calculate prayer times based on current coordinates & date
   const prayerData = useMemo(() => {
@@ -191,7 +258,7 @@ export default function App() {
   }, [prayerData.prayers, reminderPrefs, selectedDivision.nameBn]);
 
   return (
-    <div className="min-h-screen bg-slate-950 bg-islamic-pattern text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-slate-950 bg-islamic-pattern text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white pb-16 sm:pb-0">
       
       {/* Sticky Header with Live Digital Clock & Division Switcher */}
       <Header
@@ -208,6 +275,15 @@ export default function App() {
         lang={lang}
         onToggleLang={() => setLang(prev => (prev === 'bn' ? 'en' : 'bn'))}
         onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
+        onOpenInstallModal={handleOpenInstallModal}
+        isInstalled={isInstalled}
+      />
+
+      {/* Install App Promotion Banner (Dismissible) */}
+      <InstallBanner
+        onOpenInstallModal={handleOpenInstallModal}
+        isInstalled={isInstalled}
+        lang={lang}
       />
 
       {/* Main Content Area */}
@@ -261,16 +337,16 @@ export default function App() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between px-1">
                   <h3 className="text-base font-bold text-white flex items-center gap-2">
-                    <span>আজকের ওয়াক্তসূচি ও রিমাইন্ডার নিয়ন্ত্রণ</span>
+                    <span>{lang === 'bn' ? 'আজকের ওয়াক্তসূচি ও রিমাইন্ডার নিয়ন্ত্রণ' : 'Today Prayer Times & Alerts'}</span>
                     <span className="text-xs font-normal text-emerald-400">
-                      ({selectedDivision.nameBn})
+                      ({lang === 'bn' ? selectedDivision.nameBn : selectedDivision.name})
                     </span>
                   </h3>
                   <button
                     onClick={() => setIsSettingsModalOpen(true)}
                     className="text-xs text-emerald-400 hover:underline"
                   >
-                    রিমাইন্ডার সেটিংস
+                    {lang === 'bn' ? 'রিমাইন্ডার সেটিংস' : 'Reminder Settings'}
                   </button>
                 </div>
 
@@ -355,6 +431,18 @@ export default function App() {
         notificationPermission={notificationPermission}
         onRequestPermission={handleRequestNotification}
         onTestNotification={handleTestNotification}
+        lang={lang}
+        onOpenInstallModal={handleOpenInstallModal}
+        isInstalled={isInstalled}
+      />
+
+      {/* App Install / Download Modal */}
+      <InstallModal
+        isOpen={isInstallModalOpen}
+        onClose={() => setIsInstallModalOpen(false)}
+        deferredPrompt={deferredPrompt}
+        onInstalledSuccess={handleInstalledSuccess}
+        isInstalled={isInstalled}
         lang={lang}
       />
 

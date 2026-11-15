@@ -35,12 +35,12 @@ export default function PrayerCard({
   const formattedTime = formatTime(prayer.time, is24Hour, isBn);
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl transition-all duration-300 border ${
+    <div className={`relative overflow-hidden rounded-2xl transition-all duration-200 border hover:-translate-y-0.5 ${
       isActive
-        ? 'bg-gradient-to-r from-emerald-950/80 via-emerald-900/60 to-slate-900 border-emerald-500 shadow-lg shadow-emerald-950/40 scale-[1.01]'
+        ? 'bg-gradient-to-r from-emerald-950/90 via-slate-900 to-slate-900 border-emerald-400/70 shadow-lg shadow-emerald-950/30'
         : isNext
-        ? 'bg-slate-900/90 border-teal-500/60 shadow-md ring-1 ring-teal-500/30'
-        : 'bg-slate-900/50 hover:bg-slate-800/60 border-slate-800/80'
+        ? 'bg-slate-900/90 border-teal-400/50 shadow-md shadow-black/10'
+        : 'bg-slate-900/65 hover:bg-slate-800/75 border-slate-800 hover:border-slate-700'
     } p-4 sm:p-5`}>
 
       {/* Active/Next badges */}

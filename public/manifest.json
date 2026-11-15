@@ -1,16 +1,33 @@
 {
   "short_name": "সালাহ রিমাইন্ডার",
-  "name": "Salah Time Reminder Bangladesh",
+  "name": "সালাহ রিমাইন্ডার - Salah Time Bangladesh",
+  "description": "নামাজের সঠিক সময়সূচি ও স্বয়ংক্রিয় রিমাইন্ডার (ঢাকা ও সকল বিভাগ)",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#022c22",
+  "theme_color": "#080f1c",
+  "categories": ["lifestyle", "utilities"],
   "icons": [
     {
-      "src": "icon.svg",
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
       "type": "image/svg+xml",
-      "sizes": "512x512 192x192 any"
+      "sizes": "512x512 192x192 any",
+      "purpose": "any maskable"
     }
-  ],
-  "start_url": "/",
-  "background_color": "#022c22",
-  "theme_color": "#064e3b",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }
