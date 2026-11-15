@@ -1,0 +1,16 @@
+{
+  "short_name": "সালাহ রিমাইন্ডার",
+  "name": "Salah Time Reminder Bangladesh",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512 192x192 any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#022c22",
+  "theme_color": "#064e3b",
+  "display": "standalone",
+  "orientation": "portrait"
+}
