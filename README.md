@@ -1,98 +1,232 @@
-# 🕌 Salah Time Reminder Bangladesh (সালাহ রিমাইন্ডার ও নামাজের সময়সূচি)
+# 🕌 Salah Time Reminder Bangladesh
+### সালাহ রিমাইন্ডার ও নামাজের সময়সূচি
 
-A modern, mobile-first, and highly responsive **Salah Time Reminder & Islamic Companion** tailored for Bangladesh. Built with **Dhaka Division as the default**, with instant support for all 8 divisions of Bangladesh (and precise GPS coordinates).
+<p align="center">
+  <img src="public/icon.svg" alt="Salah Time Reminder Logo" width="100" />
+</p>
 
-Equipped with a **proactive 2-stage notification system** (alerts strictly at **30 minutes before** and **10 minutes before** prayer times), selective prayer toggles, a digital tasbih counter, Qibla compass, 5-waqt tracker, and authentic post-salah duas.
+<h3 align="center">Your Daily Islamic Companion — Pray on Time, Stay Connected with Allah.</h3>
 
-![Salah Time Reminder](public/icon.svg)
+<p align="center">
+  A modern, responsive Islamic companion designed specifically for Muslims in Bangladesh, featuring accurate prayer times, smart Salah reminders, Qibla direction, digital Tasbih, daily prayer tracking, and authentic Islamic duas.
+</p>
+
+<p align="center">
+  <a href="https://salah-time-reminder.vercel.app/"><strong>🌐 Live Demo</strong></a> •
+  <a href="https://github.com/Asadul09/salah-time-reminder"><strong>📂 GitHub Repository</strong></a>
+</p>
+
+<p align="center">
+  ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+  ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+  ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-Modern-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+  ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+</p>
+
+---
+
+## 🌐 Live Application
+
+**Try Salah Time Reminder Bangladesh:**
+
+👉 https://salah-time-reminder.vercel.app/
+
+A mobile-first Islamic web application with real-time prayer schedules, personalized reminders, and essential daily Islamic tools.
+
+## 📸 Screenshots & Preview
+
+Explore the application's interface and features.
+
+### 🏠 Home Dashboard
+
+| English Interface | বাংলা Interface |
+|:---:|:---:|
+| ![Home English](https://github.com/Asadul09/salah-time-reminder/blob/8fcd4280344bf855f0935f501b86f878f5ab946f/Home%20English.png?raw=true) | ![Home Bengali](https://github.com/Asadul09/salah-time-reminder/blob/8fcd4280344bf855f0935f501b86f878f5ab946f/Home.png?raw=true) |
+| English Dashboard | বাংলা ড্যাশবোর্ড |
+
+### 📱 Application Features
+
+| Preview 1 | Preview 2 |
+|:---:|:---:|
+| ![Application Preview 1](https://github.com/Asadul09/salah-time-reminder/blob/8fcd4280344bf855f0935f501b86f878f5ab946f/1.png?raw=true) | ![Application Preview 2](https://github.com/Asadul09/salah-time-reminder/blob/8fcd4280344bf855f0935f501b86f878f5ab946f/3.png?raw=true) |
 
 ---
 
 ## ✨ Key Features
 
-### 📍 Division & Location Flexibility
-- **Default Division:** **Dhaka (ঢাকা)** is pre-configured as the default central standard.
-- **All 8 Divisions Supported:** One-click instant switching between Dhaka, Chattogram, Sylhet, Rajshahi, Khulna, Barishal, Rangpur, and Mymensingh.
-- **Accurate Coordinates & Calculations:** Conforms to **Islamic Foundation Bangladesh** conventions using the University of Islamic Sciences (Karachi) astronomical calculation standard with **Hanafi Madhab** for Asr timing.
-- **Live GPS Detection:** Option to pinpoint exact latitude and longitude via GPS for sub-minute accuracy anywhere in Bangladesh.
+### 📍 1. Smart Location & Prayer Time Calculation
+- **Default Location:** Dhaka Division, Bangladesh.
+- **All 8 Divisions:** Dhaka, Chattogram, Sylhet, Rajshahi, Khulna, Barishal, Rangpur, and Mymensingh.
+- **GPS Detection:** Automatically detects the user's precise geographical coordinates.
+- **Prayer Calculation:** Uses the `adhan` library with Karachi calculation parameters and Hanafi Asr methodology, aligned with the intended Bangladesh prayer-time convention.
 
-### ⏰ Proactive Dual-Stage Reminders (Strictly 30m & 10m)
-- **1st Reminder (30 Minutes Before):** Gives you ample time for Wudu (ablution) and preparation.
-- **2nd Reminder (10 Minutes Before):** Urgent pre-alert right before the Azan / prayer time begins.
-- **Strictly Limited:** No spam, no excess notifications—fires strictly at 30m and 10m.
-- **Per-Salah Selective Toggles:** By default, all 5 daily prayers (Fajr, Dhuhr, Asr, Maghrib, Isha) have reminders enabled. Users can individually toggle OFF/ON reminders for any specific prayer.
-- **Web Notification API + In-App Alerts:** Delivers native system notifications as well as an in-app visual toast banner with gentle harmonic chimes (Web Audio API) and vibration.
+### ⏰ 2. Intelligent Two-Stage Salah Reminders
+- **30-Minute Reminder:** Early notification to prepare for Salah.
+- **10-Minute Reminder:** A second reminder shortly before prayer time.
+- **Five Prayer Support:** Fajr, Dhuhr, Asr, Maghrib, and Isha.
+- **Individual Controls:** Enable or disable reminders for each prayer separately.
+- **Multiple Alert Methods:** Browser notifications, in-app toast alerts, synthesized audio chimes, and vibration where supported.
 
-### 📱 Extra Digital Features
-- **Live Digital Clock & Hijri Calendar:** Real-time clock with ticking seconds, 12-hour/24-hour mode, Gregorian date, and Umm al-Qura Hijri date in Bengali & English.
-- **Next Prayer Live Countdown:** Precise real-time countdown (hours : minutes : seconds) and time remaining until the next prayer.
-- **Ramadan & Fasting Times:** Displays daily **Sehri End Time** and **Iftar Time**.
-- **Voluntary Prayers Window:** Includes **Tahajjud** optimal window and **Ishraq / Chasht** start times.
-- **📿 Digital Tasbih & Dhikr Counter:**
-  - Interactive tap counter with tactile click audio and haptic vibration feedback.
-  - Quick target settings (33, 99, 100, or unlimited).
-  - Confetti celebration upon target completion.
-  - Daily dhikr accumulator.
-- **🧭 Qibla Compass:**
-  - Computes exact Kaaba angle (e.g., 277.6° WNW from Dhaka).
-  - Visual compass dial with needle pointing to Kaaba, live mobile gyroscope sensor integration, and distance to Makkah (~5,130 km).
-- **✅ Daily 5-Waqt Salah Tracker:**
-  - Interactive daily checklist for Fajr, Dhuhr, Asr, Maghrib, and Isha.
-  - Visual progress bar with completion percentage and encouraging Hadith quotes.
-- **📖 Masnoon Duas & Post-Salah Azkar:**
-  - Authentic post-salah supplications, Ayatul Kursi, Tasbih-e-Fatimi, Sehri niyat, and Iftar dua with Arabic script, transliteration, Bengali translation, and Hadith references.
-  - One-click copy to clipboard.
-- **🎨 Mobile-Responsive & Islamic Aesthetic UI:**
-  - Dark emerald and golden accents with glassmorphism styling.
-  - Bilingual interface (Bengali & English toggle).
-  - Mobile bottom navigation bar for effortless one-handed use on smartphones.
-  - Progressive Web App (PWA) ready (Installable on Android & iOS).
+### 🕒 3. Live Clock & Prayer Countdown
+- Real-time digital clock with ticking seconds.
+- 12-hour and 24-hour clock formats.
+- Gregorian and Hijri calendar display.
+- Bengali and English date presentation.
+- Live countdown to the next Salah.
+
+### 🌙 4. Ramadan & Voluntary Prayer Times
+- Daily Sehri ending time.
+- Iftar time.
+- Tahajjud prayer window.
+- Ishraq and Chasht prayer timings.
+
+### 📿 5. Digital Tasbih & Dhikr Counter
+- Interactive digital Tasbih counter.
+- Quick targets: 33, 99, 100, or unlimited.
+- Audio click and vibration feedback.
+- Daily Dhikr accumulation.
+- Confetti celebration when a target is completed.
+
+### 🧭 6. Qibla Compass
+- Calculates the direction of the Holy Kaaba.
+- Live compass orientation using supported mobile device sensors.
+- Visual compass interface.
+- Distance calculation from the user's location to Makkah.
+
+### ✅ 7. Daily Five-Waqt Salah Tracker
+- Track all five daily prayers.
+- Interactive daily completion checklist.
+- Visual progress bar and completion percentage.
+- Motivational Hadith quotations.
+
+### 📖 8. Islamic Duas & Post-Salah Azkar
+- Authentic post-Salah supplications.
+- Ayatul Kursi.
+- Tasbih-e-Fatimi.
+- Sehri intention and Iftar dua.
+- Arabic text, transliteration, and Bengali translation.
+- Hadith references and one-click copy functionality.
+
+### 🎨 9. Modern UI & User Experience
+- Dark emerald and golden Islamic-inspired theme.
+- Modern glassmorphism design.
+- Fully responsive mobile-first layout.
+- Bengali and English language switching.
+- Dedicated mobile bottom navigation.
+- Progressive Web App (PWA) support for installation on supported devices.
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| React 19 | Frontend UI development |
+| Vite | Development server and build tool |
+| Tailwind CSS | Responsive styling |
+| Lucide React | Icon library |
+| Adhan | Islamic prayer time calculations |
+| Web Audio API | Audio notifications |
+| Notifications API | Browser notifications |
+| Navigator Vibration API | Haptic feedback |
+| Canvas Confetti | Celebration effects |
+| JavaScript | Application logic |
+| Vercel | Deployment and hosting |
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Node.js (v18+)
-- npm
+Follow these instructions to run the project locally.
 
-### Installation
+### Prerequisites
+- Node.js v18 or later
+- npm
+- Git
+
+### 1. Clone the Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/Asadul09/salah-time-reminder.git
+```
 
-# Navigate to the project directory
+### 2. Navigate to the Project
+
+```bash
 cd salah-time-reminder
+```
 
-# Install dependencies
+### 3. Install Dependencies
+
+```bash
 npm install
+```
 
-# Start the development server
+### 4. Start Development Server
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open your browser and visit:
 
-### Production Build
+```text
+http://localhost:5173
+```
+
+### 5. Build for Production
 
 ```bash
 npm run build
 ```
 
-The optimized static assets will be generated in the `dist` folder, ready for deployment to GitHub Pages, Vercel, or Netlify.
+The optimized production files will be generated inside the `dist` directory.
 
 ---
 
-## 🛠️ Tech Stack
-- **Framework:** React 19 + Vite
-- **Styling:** Tailwind CSS (Modern Glassmorphism & Islamic Emerald Theme)
-- **Icons:** Lucide React
-- **Astronomical Prayer Engine:** `adhan` library (Batoul Apps)
-- **Audio & Haptics:** Web Audio API (Synthesized acoustic chimes) & Navigator Vibration API
-- **Celebration Effects:** Canvas Confetti
+## 📁 Project Highlights
 
----
+- Responsive and mobile-first architecture.
+- Location-based prayer time calculations.
+- Two-stage notification scheduling.
+- Interactive Islamic utilities.
+- Bilingual user interface.
+- Installable PWA experience.
+- Modern and accessible design.
+
+## 🎯 Project Objective
+
+The goal of Salah Time Reminder Bangladesh is to make daily Islamic practices easier through technology.
+
+By combining accurate prayer schedules, proactive reminders, and essential Islamic tools in one application, users can stay organized, track their prayers, and maintain a stronger connection with their daily worship.
+
+## 🔮 Future Improvements
+
+- Cloud synchronization for user preferences.
+- User accounts and personalized dashboards.
+- More advanced notification scheduling.
+- Additional Islamic learning resources.
+- Expanded customization options.
+
+## 👨‍💻 Developer
+
+**MD Asadul Islam**  
+Software Engineer | Full-Stack MERN Developer
+
+- 🌐 Portfolio: https://portfolio-website-pi-five-83.vercel.app/
+- 💻 GitHub: https://github.com/Asadul09
+- 🚀 Project: https://salah-time-reminder.vercel.app/
 
 ## 📄 License
-This project is open-source and available under the [MIT License](LICENSE).
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  Made with ❤️ and ☪️ for the Muslim community of Bangladesh.
+</p>
+
+<p align="center">
+  <strong>Pray on Time. Remember Allah. Every Day.</strong>
+</p>
